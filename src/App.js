@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { FaRegFaceLaughSquint } from "react-icons/fa6";
+import { FaRegFaceSadCry } from "react-icons/fa6";
+
 
 import getRandomChuckNorrisJoke from "./chuckNorrisJokesApi.js";
+
 import getRandomDadJoke from "./dadJokesApi.js";
 
 function App() {
@@ -13,13 +16,17 @@ function App() {
   const [dadJoke, setDadJoke] = useState({ setup: "", punchline: "" });
   const [joke, setJoke] = useState(null);
 
+
   const fetchChuckNorrisJoke = async () => {
     try {
       const data = await getRandomChuckNorrisJoke();
       const newJoke = { setup: data.value, punchline: "" };
       setChuckNorrisJoke(newJoke);
-      setJoke(newJoke); // Update joke state immediately
+      setJoke(newJoke);
+      
     } catch (error) {
+      setJoke({setup: `Server Error, please try again later :(`, punchline: ""})
+      
       console.log(error);
     }
   };
@@ -32,7 +39,7 @@ function App() {
         punchline: data.body[0].punchline,
       };
       setDadJoke(newJoke);
-      setJoke(newJoke); // Update joke state immediately
+      setJoke(newJoke); 
     } catch (error) {
       console.log(error);
     }
